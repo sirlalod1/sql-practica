@@ -67,3 +67,63 @@ SELECT * FROM north_american_cities WHERE Country = "Mexico" ORDER BY Population
 
 -- LESSON 5 ASSIGNMENT 5: List the third and fourth largest cities in the United States
 SELECT * FROM north_american_cities WHERE Country = "United States" ORDER BY Population DESC LIMIT 2 OFFSET 2;
+
+-- =====================================================
+-- Semana 1 - DB Fiddle, consultas inventadas
+-- Fuente: Claude
+-- =====================================================
+
+-- Mostrá el cliente y el producto de todos los préstamos.
+SELECT cliente, producto FROM prestamos;
+
+-- Mostrá todas las columnas de todos los préstamos.
+SELECT * FROM prestamos;
+
+-- Cliente y monto de los préstamos de más de 1.000.000.
+SELECT cliente, monto FROM prestamos
+where monto > 1000000;
+
+-- Todos los datos de los préstamos con id entre 4 y 8
+SELECT * FROM prestamos
+WHERE id BETWEEN 4 AND 8;
+
+-- Cliente y situación de los préstamos cuya situación no sea 1
+SELECT CLIENTE, SITUACION FROM prestamos
+WHERE SITUACION != 1;
+
+-- Cliente, monto y plazo de los préstamos de más de 1.000.000 y plazo de 36 meses o más
+SELECT CLIENTE, MONTO, PLAZO_MESES FROM prestamos
+WHERE MONTO > 1000000 AND PLAZO_MESES >= 36;
+
+-- Todos los datos de los préstamos que no son de Buenos Aires
+SELECT * FROM prestamos
+WHERE provincia != "Buenos Aires";
+
+-- Lista de productos sin repetir, en orden alfabético
+SELECT DISTINCT producto FROM prestamos
+ORDER BY producto ASC;
+
+-- Los 3 préstamos de mayor monto (cliente y monto)
+SELECT cliente,monto FROM prestamos
+ORDER BY monto DESC
+LIMIT 3;
+
+-- Los préstamos de menor monto, salteando los 3 primeros y mostrando los 3 siguientes
+SELECT cliente,monto FROM prestamos
+ORDER BY monto ASC
+LIMIT 3 OFFSET 3;
+
+-- Cliente y monto de los préstamos personales de Córdoba, de mayor a menor monto.
+SELECT cliente,monto FROM prestamos
+WHERE provincia="Córdoba"
+ORDER BY monto DESC;
+
+-- Los 2 préstamos más antiguos (cliente y fecha)
+SELECT cliente,fecha_otorgamiento FROM prestamos
+ORDER BY fecha_otorgamiento ASC
+LIMIT 2;
+
+-- Cliente y tasa de los préstamos con situación 3 o peor, de mayor a menor tasa
+SELECT cliente,tasa_anual FROM prestamos
+WHERE situacion >= 3
+ORDER BY tasa_anual DESC;
