@@ -242,3 +242,39 @@ ORDER BY cr.situacion ASC;
 SELECT DISTINCT cl.nombre, cl.email, cr.monto FROM clientes cl
 LEFT JOIN creditos cr ON cr.cliente_id  = cl.id
 WHERE cl.email IS NULL AND cr.monto IS NULL;
+
+-- =====================================================
+-- Semana 1 - SQLBolt, lecciones 9 a 12
+-- Fuente: sqlbolt.com
+-- =====================================================
+
+-- LESSON 9 ASSIGNMENT 1 List all movies and their combined sales in millions of dollars
+SELECT Title, (Domestic_sales+International_sales)/1000000 AS Combined_sales
+FROM Boxoffice
+JOIN Movies WHERE Id = Movie_id
+ORDER BY Combined_sales DESC;
+
+-- LESSON 9 ASSIGNMENT 2 List all movies and their ratings in percent
+SELECT Title, Rating*10 AS Rating_percentage
+FROM Boxoffice
+JOIN Movies WHERE Id = Movie_id
+ORDER BY Rating DESC;
+
+-- LESSON 9 ASSIGNMENT 3 List all movies that were released on even number years
+SELECT title, year
+FROM movies
+WHERE year % 2 = 0;
+
+-- LESSON 10 ASSIGNMENT 1 Find the longest time that an employee has been at the studio
+SELECT Name, MAX (Years_employed) AS Years_employed
+FROM employees;
+
+-- LESSON 10 ASSIGNMENT 2 For each role, find the average number of years employed by employees in that role
+SELECT Role, AVG (Years_employed) AS Years_employed
+FROM employees
+GROUP BY Role;
+
+-- LESSON 10 ASSIGNMENT 3 Find the total number of employee years worked in each building
+SELECT Building, SUM (Years_employed) AS Years_employed
+FROM employees
+GROUP BY Building;
