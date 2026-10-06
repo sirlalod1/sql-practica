@@ -200,4 +200,24 @@ ORDER BY cl.nombre ASC;
 --Sin escribir consulta: comparando con el ejercicio 1a, ¿cuántas filas más aparecen y qué valor tienen producto y monto en ellas? 
 --aparecen 3 filas más (12 contra 9): Joaquín Suárez, Julieta Ramos y Sofía Herrera, con producto y monto en NULL.
 
+-- Ahora mostrá todos los créditos con el nombre de su cliente, incluso el que no tiene cliente asignado.
+SELECT monto, nombre, producto
+FROM creditos cr
+LEFT JOIN clientes cl ON cl.id = cr.cliente_id
+ORDER BY cr.monto ASC;
+
+-- Nombre de los clientes sin email cargado.
+SELECT nombre FROM clientes
+WHERE email IS NULL;
+
+-- Nombre de los clientes que no tienen ningún crédito.
+SELECT cl.nombre, cr.monto FROM clientes  cl
+LEFT JOIN creditos cr ON cl.id = cr.cliente_id
+WHERE cr.id IS NULL;
+
+--Nombre, producto y monto de los créditos activos (sin fecha de cancelación).
+SELECT cl.nombre, cr.producto, cr.monto FROM creditos cr
+LEFT JOIN clientes  cl ON cr.cliente_id  = cl.id
+WHERE cr.fecha_cancelacion IS NULL;
+
 -- 
