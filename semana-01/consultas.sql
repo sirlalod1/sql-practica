@@ -127,3 +127,77 @@ LIMIT 2;
 SELECT cliente,tasa_anual FROM prestamos
 WHERE situacion >= 3
 ORDER BY tasa_anual DESC;
+
+-- =====================================================
+-- Semana 1 - SQLBolt, lecciones 6 a 8
+-- Fuente: sqlbolt.com
+-- =====================================================
+
+-- LESSON 6 ASSIGNMENT 1 Find the domestic and international sales for each movie
+SELECT title, Domestic_sales, International_sales FROM movies
+INNER JOIN Boxoffice ON Id = Movie_id;
+
+-- LESSON 6 ASSIGNMENT 2 Show the sales numbers for each movie that did better internationally rather than domestically
+SELECT title, Domestic_sales, International_sales FROM movies
+INNER JOIN Boxoffice ON Id = Movie_id
+WHERE International_sales > Domestic_sales;
+
+-- LESSON 6 ASSIGNMENT 3 List all the movies by their ratings in descending order
+SELECT title, Domestic_sales, Rating FROM movies
+INNER JOIN Boxoffice ON Id = Movie_id
+ORDER BY Rating DESC;
+
+-- LESSON 7 ASSIGNMENT 1 Find the list of all buildings that have employees
+SELECT DISTINCT Building FROM employees
+WHERE  Name != "NULL";
+
+-- LESSON 7 ASSIGNMENT 2 Find the list of all buildings and their capacity
+SELECT Building_name, Capacity FROM Buildings;
+
+-- LESSON 7 ASSIGNMENT 3 List all buildings and the distinct employee roles in each building (including empty buildings)
+SELECT DISTINCT Building_name, Role FROM Buildings
+LEFT JOIN Employees ON Building_name = Building;
+
+-- LESSON 8 ASSIGNMENT 1 Find the name and role of all employees who have not been assigned to a building
+SELECT Name, Role FROM employees
+WHERE Building IS NULL;
+
+-- LESSON 8 ASSIGNMENT 2 Find the names of the buildings that hold no employees
+SELECT Building_name FROM Buildings
+LEFT JOIN Employees ON Building_name=Building
+WHERE Building IS NULL;
+
+-- =====================================================
+-- Semana 1 - DB Fiddle, consultas inventadas Part 2
+-- Fuente: Claude
+-- =====================================================
+
+-- Mostrá el nombre del cliente, el producto y el monto de cada crédito. ¿Cuántas filas obtenés? (Obtengo 9)
+SELECT cl.nombre, cr.producto, cr.monto
+FROM creditos cr
+INNER JOIN clientes cl ON cr.cliente_id = cl.id;
+
+-- Lo mismo, solo para créditos de más de 1.000.000, de mayor a menor monto.
+SELECT cl.nombre, cr.producto, cr.monto
+FROM creditos cr
+INNER JOIN clientes cl ON cr.cliente_id = cl.id
+WHERE monto > 1000000
+ORDER BY monto DESC;
+
+-- Lo mismo, solo para clientes de Córdoba.
+SELECT cl.nombre, cr.producto, cr.monto, cl.provincia
+FROM creditos cr
+INNER JOIN clientes cl ON cr.cliente_id = cl.id
+WHERE monto > 1000000 AND cl.provincia = "Córdoba"
+ORDER BY monto DESC;
+
+-- Mostrá todos los clientes con su producto y monto, incluso los que no tienen créditos. Ordená por nombre.
+SELECT cl.nombre, cr.producto, cr.monto
+FROM clientes cl
+LEFT JOIN creditos cr ON cl.id = cr.cliente_id
+ORDER BY cl.nombre ASC;
+
+--Sin escribir consulta: comparando con el ejercicio 1a, ¿cuántas filas más aparecen y qué valor tienen producto y monto en ellas? 
+--aparecen 3 filas más (12 contra 9): Joaquín Suárez, Julieta Ramos y Sofía Herrera, con producto y monto en NULL.
+
+-- 
