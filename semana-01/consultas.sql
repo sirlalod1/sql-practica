@@ -220,4 +220,25 @@ SELECT cl.nombre, cr.producto, cr.monto FROM creditos cr
 LEFT JOIN clientes  cl ON cr.cliente_id  = cl.id
 WHERE cr.fecha_cancelacion IS NULL;
 
--- 
+-- Todos los datos del crédito sin cliente asignado
+SELECT * FROM creditos cr
+LEFT JOIN clientes  cl ON cr.cliente_id  = cl.id
+WHERE cl.nombre IS NULL;
+
+-- Los 3 créditos activos de mayor monto, de clientes con email cargado: nombre, provincia, producto y monto.
+SELECT cl.nombre, cl.provincia, cr.producto, cr.monto FROM creditos cr
+LEFT JOIN clientes  cl ON cr.cliente_id  = cl.id
+WHERE cr.fecha_cancelacion IS NULL AND cl.email IS NOT NULL
+ORDER BY cr.monto DESC
+LIMIT 3;
+
+-- Provincias distintas, en orden alfabético, de clientes con algún crédito en situación 3 o peor.
+SELECT DISTINCT cl.provincia, cr.situacion FROM creditos cr
+LEFT JOIN clientes  cl ON cr.cliente_id  = cl.id
+WHERE cr.situacion >= 3
+ORDER BY cr.situacion ASC;
+
+-- Clientes que no tienen créditos y no tienen email (no podemos contactarlos ni ofrecerles nada).
+SELECT DISTINCT cl.nombre, cl.email, cr.monto FROM clientes cl
+LEFT JOIN creditos cr ON cr.cliente_id  = cl.id
+WHERE cl.email IS NULL AND cr.monto IS NULL;
