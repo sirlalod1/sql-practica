@@ -278,3 +278,17 @@ GROUP BY Role;
 SELECT Building, SUM (Years_employed) AS Years_employed
 FROM employees
 GROUP BY Building;
+
+-- =====================================================
+-- Semana 1 - DB Fiddle, consultas inventadas Part 3
+-- Fuente: Claude
+-- =====================================================
+
+-- a) Para los créditos Prendarios, mostrá id, producto, monto y la cuota mensual aproximada (monto dividido plazo en meses) con el alias cuota_aprox. Quedate con las 3 cuotas más altas.
+SELECT id, producto, monto, monto * 1.0 / plazo_meses AS cuota_aprox
+FROM cartera
+WHERE producto='prendario'
+ORDER BY cuota_aprox DESC
+LIMIT 3
+
+-- b) Para los créditos de Mendoza, mostrá id, provincia y el monto expresado en miles, con el alias monto_miles.
