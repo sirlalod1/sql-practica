@@ -284,11 +284,48 @@ GROUP BY Building;
 -- Fuente: Claude
 -- =====================================================
 
--- a) Para los créditos Prendarios, mostrá id, producto, monto y la cuota mensual aproximada (monto dividido plazo en meses) con el alias cuota_aprox. Quedate con las 3 cuotas más altas.
+-- 1.a) Para los créditos Prendarios, mostrá id, producto, monto y la cuota mensual aproximada (monto dividido plazo en meses) con el alias cuota_aprox. Quedate con las 3 cuotas más altas.
 SELECT id, producto, monto, monto * 1.0 / plazo_meses AS cuota_aprox
 FROM cartera
 WHERE producto='prendario'
 ORDER BY cuota_aprox DESC
 LIMIT 3
 
--- b) Para los créditos de Mendoza, mostrá id, provincia y el monto expresado en miles, con el alias monto_miles.
+-- 1.b) Para los créditos de Mendoza, mostrá id, provincia y el monto expresado en miles, con el alias monto_miles.
+SELECT id, provincia, monto / 1000.0 AS monto_miles
+FROM cartera
+WHERE provincia = 'Mendoza';
+
+-- 1.c) Mostrá id, producto y el interés anual estimado (monto por tasa anual dividido 100) con el alias interes_anual. Quedate con los 5 mayores.
+SELECT id, producto, monto * tasa_anual / 100 AS interes_anual
+FROM cartera
+ORDER BY interes_anual DESC
+LIMIT 5;
+
+-- 2.a) En una sola consulta: cantidad de créditos, monto total, monto promedio, monto mínimo y monto máximo, cada uno con su alias.
+SELECT COUNT(*) AS cantidad, SUM(monto) AS monto_total, AVG(monto) AS monto_promedio,
+       MIN(monto) AS monto_minimo, MAX(monto) AS monto_maximo
+FROM cartera;
+
+-- 2.b) Mostrá la cantidad total de créditos y, al lado, cuántos tienen fecha de cancelación. ¿Cuántos están activos?
+SELECT COUNT(*) AS total_creditos, COUNT(fecha_cancelacion) AS cancelados
+FROM cartera;
+
+-- 2.c) Monto total y tasa promedio de los créditos Personales activos.
+SELECT SUM(monto) AS monto_total, AVG(tasa_anual) AS tasa_promedio
+FROM cartera
+WHERE producto = 'Personal' AND fecha_cancelacion IS NULL;
+
+-- 3a (Hipotecario 4 / 173.000.000 / 9,875; Prendario 5 / 55.500.000 / 56,8;
+--     Personal 9 / 10.400.000 / ~77,89; Tarjeta 6 / 2.030.000 / ~95,67)
+SELECT producto, COUNT(*) AS cantidad, SUM(monto) AS monto_total, AVG(tasa_anual) AS tasa_promedio
+FROM cartera
+GROUP BY producto
+ORDER BY monto_total DESC;
+
+-- 3b (Santa Fe 2; Buenos Aires 1; Córdoba 1; Mendoza 1)
+SELECT provincia, COUNT(*) AS irregulares
+FROM cartera
+WHERE situacion >= 3
+GROUP BY provincia
+ORDER BY irregulares DESC, provincia ASC;
