@@ -343,10 +343,27 @@ HAVING monto_promedio > 40000000
 ORDER BY monto_promedio ASC;
 
 -- 4.a) Considerando solo los créditos activos, mostrá las 2 provincias con mayor monto total, siempre que ese total supere los 50.000.000.
-
+SELECT provincia, SUM(monto) AS monto_total
+FROM cartera
+WHERE fecha_cancelacion IS NULL
+GROUP BY provincia
+HAVING monto_total > 50000000
+ORDER BY monto_total DESC
+LIMIT 2;
 
 -- 4.b) Considerando solo los créditos en situación 1, mostrá por producto la cantidad y la tasa máxima, ordenado por tasa máxima descendente.
+SELECT producto, COUNT(*) AS cantidad, SUM(monto) AS monto_total, MAX(tasa_anual) AS tasa_maxima
+FROM cartera
+WHERE situacion = 1
+GROUP BY producto
+ORDER BY tasa_maxima DESC;
 
+-- 4.c) SELECT producto, AVG(tasa_anual) FROM cartera WHERE AVG(tasa_anual) > 70 GROUP BY producto;
+-- Esta consulta da error. Explicá por qué y corregila para que muestre los productos con tasa promedio mayor a 70:
+-- Respuesta: WHERE se ejecuta antes de agrupar, cuando todavía no existen los promedios por producto
+SELECT producto, AVG(tasa_anual)
+FROM cartera
+GROUP BY producto
+HAVING AVG(tasa_anual)>70;
 
--- 4.c) Esta consulta da error. Explicá por qué y corregila para que muestre los productos con tasa promedio mayor a 70:
 
