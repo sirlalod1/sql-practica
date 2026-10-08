@@ -335,9 +335,18 @@ FROM cartera
 GROUP BY producto
 HAVING COUNT(*) > 5;
 
--- d) Combinaciones de provincia y producto con monto promedio superior a 40.000.000, de mayor a menor
+-- 3.d) Combinaciones de provincia y producto con monto promedio superior a 40.000.000, de mayor a menor
 SELECT provincia, producto, AVG(monto) AS monto_promedio
 FROM cartera
 GROUP BY provincia, producto
 HAVING monto_promedio > 40000000
 ORDER BY monto_promedio ASC;
+
+-- 4.a) Considerando solo los créditos activos, mostrá las 2 provincias con mayor monto total, siempre que ese total supere los 50.000.000.
+
+
+-- 4.b) Considerando solo los créditos en situación 1, mostrá por producto la cantidad y la tasa máxima, ordenado por tasa máxima descendente.
+
+
+-- 4.c) Esta consulta da error. Explicá por qué y corregila para que muestre los productos con tasa promedio mayor a 70:
+
