@@ -330,3 +330,14 @@ GROUP BY provincia
 ORDER BY irregulares DESC, provincia ASC;
 
 -- 3.c) Productos con más de 5 créditos.
+SELECT producto, COUNT(*) AS cantidad
+FROM cartera
+GROUP BY producto
+HAVING COUNT(*) > 5;
+
+-- d) Combinaciones de provincia y producto con monto promedio superior a 40.000.000, de mayor a menor
+SELECT provincia, producto, AVG(monto) AS monto_promedio
+FROM cartera
+GROUP BY provincia, producto
+HAVING monto_promedio > 40000000
+ORDER BY monto_promedio ASC;
