@@ -316,16 +316,17 @@ SELECT SUM(monto) AS monto_total, AVG(tasa_anual) AS tasa_promedio
 FROM cartera
 WHERE producto = 'Personal' AND fecha_cancelacion IS NULL;
 
--- 3a (Hipotecario 4 / 173.000.000 / 9,875; Prendario 5 / 55.500.000 / 56,8;
---     Personal 9 / 10.400.000 / ~77,89; Tarjeta 6 / 2.030.000 / ~95,67)
+-- 3.a) Por producto: cantidad de créditos, monto total y tasa promedio, ordenado por monto total de mayor a menor.
 SELECT producto, COUNT(*) AS cantidad, SUM(monto) AS monto_total, AVG(tasa_anual) AS tasa_promedio
 FROM cartera
 GROUP BY producto
 ORDER BY monto_total DESC;
 
--- 3b (Santa Fe 2; Buenos Aires 1; Córdoba 1; Mendoza 1)
+-- 3.b) Por provincia: cantidad de créditos irregulares (situación 3 o más). Ordená por cantidad descendente y, si empatan, por provincia.
 SELECT provincia, COUNT(*) AS irregulares
 FROM cartera
 WHERE situacion >= 3
 GROUP BY provincia
 ORDER BY irregulares DESC, provincia ASC;
+
+-- 3.c) Productos con más de 5 créditos.
