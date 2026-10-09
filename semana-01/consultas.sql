@@ -448,7 +448,13 @@ VALUES (11, 'Lola Vega', 'caja de ahorro', 'Santa Fe', 90000.00),(12, 'Iván Paz
 SELECT * FROM cuentas;
 
 -- 2.a) Cambiá el saldo de la cuenta 3 a 500000 y verificá.
-b) Sumá 5000 al saldo de las cuentas activas de Santa Fe. Mostrá las cuentas de esa provincia.
+UPDATE cuentas
+SET saldo=50000
+WHERE id=3;
+SELECT * FROM cuentas;
+
+-- 2.b) Sumá 5000 al saldo de las cuentas activas de Santa Fe. Mostrá las cuentas de esa provincia.
+
 c) Marcá como inactivas las cuentas activas con saldo menor a 100000. Mostrá las inactivas.
 
 Ejercicio 3: DELETE (lección 15)
