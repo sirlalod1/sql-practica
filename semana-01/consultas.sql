@@ -426,3 +426,49 @@ DROP TABLE IF EXISTS movies;
 
 -- LESSON 18 ASSIGNMENT 2 And drop the BoxOffice table as well
 DROP TABLE IF EXISTS BoxOffice;
+
+-- =====================================================
+-- Semana 1 - DB Fiddle, consultas inventadas Part 4
+-- Fuente: Claude
+-- =====================================================
+
+-- 1.a) Insertá la cuenta 9 de Rocío Benítez, caja de ahorro, Mendoza, saldo 150000 y activa. Verificá con un SELECT.
+INSERT INTO cuentas
+VALUES (9, 'Rocío Benítez', 'caja de ahorro', 'Mendoza', 150000, 1);
+SELECT * FROM cuentas WHERE id = 9;
+
+-- b) Insertá la cuenta 10 de Bruno Castro, cuenta corriente, Córdoba, sin indicar saldo ni activa. ¿Qué valores toman? Saldo 0, activa 1
+INSERT INTO cuentas (id, titular, tipo_cuenta, provincia)
+VALUES (10,'Bruno Castro','Cuenta corriente','Córdoba');
+SELECT * FROM cuentas WHERE id = 10;
+
+c) Con un solo INSERT, agregá las cuentas 11 (Lola Vega, caja de ahorro, Santa Fe, 90000) y 12 (Iván Paz, cuenta corriente, Buenos Aires, 400000). ¿Cuántas cuentas hay en total?
+INSERT INTO cuentas (id, titular, tipo_cuenta, provincia, saldo)
+VALUES (11, 'Lola Vega', 'caja de ahorro', 'Santa Fe', 90000.00),(12, 'Iván Paz', 'cuenta corriente', 'Buenos Aires', 400000.00);
+SELECT * FROM cuentas;
+
+-- 2.a) Cambiá el saldo de la cuenta 3 a 500000 y verificá.
+b) Sumá 5000 al saldo de las cuentas activas de Santa Fe. Mostrá las cuentas de esa provincia.
+c) Marcá como inactivas las cuentas activas con saldo menor a 100000. Mostrá las inactivas.
+
+Ejercicio 3: DELETE (lección 15)
+
+a) Eliminá la cuenta 8 y contá cuántas cuentas quedan.
+b) Primero, con un SELECT, mirá qué cuentas inactivas tienen saldo 0. Después eliminalas con un DELETE con la misma condición y contá cuántas quedan.
+c) Probá UPDATE cuentas SET activa = 0; sin WHERE y contá cuántas cuentas siguen activas. Hacelo solo en DB Fiddle.
+
+Ejercicio 4: CREATE, ALTER y DROP (lecciones 16 a 18)
+
+a) Creá la tabla sucursales con id (clave primaria), nombre y provincia (ambos obligatorios, NOT NULL) y cantidad de empleados (por defecto 0). Insertá 3 sucursales con empleados y una cuarta sin indicar ese dato.
+b) Agregá a sucursales la columna telefono. ¿Qué valor tiene en las filas existentes?
+c) Renombrá la tabla a sedes y contá sus filas.
+d) Borrá la tabla y probá un SELECT sobre ella. ¿Qué pasa?
+e) Con sucursales creada (repetí el bloque de 4a), mostrá cada sucursal con la cantidad de cuentas de su provincia. Incluí sucursales sin cuentas. Es un LEFT JOIN con GROUP BY.
+
+Ejercicio 5: subconsultas y UNION (temas extra de SQLBolt)
+
+a) Titular y saldo de las cuentas con saldo mayor al promedio, de mayor a menor. Usá una subconsulta.
+b) Titulares de cuentas que tienen movimientos (subconsulta con IN).
+c) Titulares de cuentas que no tienen movimientos (NOT IN).
+d) Provincias con alguna cuenta de saldo mayor a 1.000.000, unidas con provincias con alguna cuenta corriente. Hacelo con UNION y con UNION ALL y compará la cantidad de filas.
+e) Opcional: provincias con alguna cuenta inactiva que no estén entre las de saldo mayor a 1.000.000 (EXCEPT).
