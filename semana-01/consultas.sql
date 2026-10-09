@@ -366,4 +366,30 @@ FROM cartera
 GROUP BY producto
 HAVING AVG(tasa_anual)>70;
 
+-- =====================================================
+-- Semana 1 - SQLBolt, lecciones 13 a 18
+-- Fuente: sqlbolt.com
+-- =====================================================
 
+-- 13.1 Add the studio's new production, Toy Story 4 to the list of movies (you can use any director)
+INSERT INTO movies
+Values(4, 'Toy Story 4', 'John Lasseter', 2026, 98);
+
+-- 13.2 Toy Story 4 has been released to critical acclaim! It had a rating of 8.7, and made 340 million domestically and 270 million internationally. Add the record to the BoxOffice table.
+INSERT INTO boxoffice
+Values(4, 8.7, 340000000, 270000000);
+
+-- 14.1 The director for A Bug's Life is incorrect, it was actually directed by John Lasseter
+UPDATE Movies
+SET Director='John Lasseter'
+WHERE id=2
+
+-- 14.2 The year that Toy Story 2 was released is incorrect, it was actually released in 1999
+UPDATE Movies
+SET Year=1999
+WHERE id=3
+
+-- 14.3 Both the title and director for Toy Story 8 is incorrect! The title should be "Toy Story 3" and it was directed by Lee Unkrich
+UPDATE Movies
+SET Title='Toy Story 3', Director='Lee Unkrich'
+WHERE id=11
