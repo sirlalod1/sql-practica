@@ -527,6 +527,7 @@ SELECT * FROM sucursales;
 
 -- 4.e) Con sucursales creada (repetí el bloque de 4a), mostrá cada sucursal con la cantidad de cuentas de su provincia. Incluí sucursales sin cuentas. Es un LEFT JOIN con GROUP BY.
 
+
 Ejercicio 5: subconsultas y UNION (temas extra de SQLBolt)
 
 a) Titular y saldo de las cuentas con saldo mayor al promedio, de mayor a menor. Usá una subconsulta.
