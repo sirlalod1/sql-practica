@@ -537,9 +537,38 @@ LEFT JOIN cuentas c ON c.provincia = s.provincia
 GROUP BY s.nombre;
 
 -- 5.a) Titular y saldo de las cuentas con saldo mayor al promedio, de mayor a menor. Usá una subconsulta.
-
+SELECT titular, saldo FROM cuentas
+WHERE saldo > (SELECT AVG (saldo) FROM cuentas)
+ORDER BY saldo DESC;
 
 b) Titulares de cuentas que tienen movimientos (subconsulta con IN).
+SELECT titular FROM cuentas
+WHERE id IN (SELECT cuenta_id FROM movimientos)
+ORDER BY titular ASC;
+
 c) Titulares de cuentas que no tienen movimientos (NOT IN).
-d) Provincias con alguna cuenta de saldo mayor a 1.000.000, unidas con provincias con alguna cuenta corriente. Hacelo con UNION y con UNION ALL y compará la cantidad de filas.
+SELECT titular FROM cuentas
+WHERE id NOT IN (SELECT cuenta_id FROM movimientos)
+ORDER BY titular ASC;
+
+d) Provincias con alguna cuenta de saldo mayor a 1.000.000, unidas con provincias con alguna cuenta corriente. Hacelo con UNION y con UNION ALL y compará la cantidad de filas. (UNION ALL conserva los repetidos)
+SELECT provincia FROM cuentas
+WHERE saldo > 1000000
+UNION
+SELECT provincia FROM cuentas
+WHERE tipo_cuenta = 'Cuenta corriente'
+ORDER BY provincia ASC;
+
+SELECT provincia FROM cuentas
+WHERE saldo > 1000000
+UNION ALL
+SELECT provincia FROM cuentas
+WHERE tipo_cuenta = 'Cuenta corriente'
+ORDER BY provincia ASC;
+
 e) Opcional: provincias con alguna cuenta inactiva que no estén entre las de saldo mayor a 1.000.000 (EXCEPT).
+SELECT provincia FROM cuentas 
+WHERE activa = 0
+EXCEPT
+SELECT provincia FROM cuentas 
+WHERE saldo > 1000000;
