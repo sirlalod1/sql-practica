@@ -454,18 +454,48 @@ WHERE id=3;
 SELECT * FROM cuentas;
 
 -- 2.b) Sumá 5000 al saldo de las cuentas activas de Santa Fe. Mostrá las cuentas de esa provincia.
+UPDATE cuentas
+SET saldo=saldo+5000
+WHERE provincia='Santa Fe' AND activa=1;
+SELECT * FROM cuentas
+WHERE provincia='Santa Fe';
 
-c) Marcá como inactivas las cuentas activas con saldo menor a 100000. Mostrá las inactivas.
+-- 2.c) Marcá como inactivas las cuentas activas con saldo menor a 100000. Mostrá las inactivas.
+UPDATE cuentas
+SET activa=0
+WHERE saldo<10000;
+SELECT * FROM cuentas
+WHERE activa=0;
 
-Ejercicio 3: DELETE (lección 15)
+-- 3.a) Eliminá la cuenta 8 y contá cuántas cuentas quedan.
+DELETE FROM cuentas
+WHERE id=8;
+SELECT * FROM cuentas;
 
-a) Eliminá la cuenta 8 y contá cuántas cuentas quedan.
-b) Primero, con un SELECT, mirá qué cuentas inactivas tienen saldo 0. Después eliminalas con un DELETE con la misma condición y contá cuántas quedan.
-c) Probá UPDATE cuentas SET activa = 0; sin WHERE y contá cuántas cuentas siguen activas. Hacelo solo en DB Fiddle.
+-- 3.b) Primero, con un SELECT, mirá qué cuentas inactivas tienen saldo 0. Después eliminalas con un DELETE con la misma condición y contá cuántas quedan. (No queda ninguna)
+SELECT * FROM cuentas
+WHERE saldo=0 AND activa=0;
 
-Ejercicio 4: CREATE, ALTER y DROP (lecciones 16 a 18)
+DELETE FROM cuentas
+WHERE saldo=0 AND activa=0;
+SELECT * FROM cuentas
+WHERE saldo=0 AND activa=0;
 
-a) Creá la tabla sucursales con id (clave primaria), nombre y provincia (ambos obligatorios, NOT NULL) y cantidad de empleados (por defecto 0). Insertá 3 sucursales con empleados y una cuarta sin indicar ese dato.
+-- 3.c) Probá UPDATE cuentas SET activa = 0; sin WHERE y contá cuántas cuentas siguen activas. Hacelo solo en DB Fiddle. (Ninguna queda activa)
+UPDATE cuentas SET activa = 0;
+SELECT * FROM cuentas
+WHERE activa=0;
+
+--4.a) Creá la tabla sucursales con id (clave primaria), nombre y provincia (ambos obligatorios, NOT NULL) y cantidad de empleados (por defecto 0). Insertá 3 sucursales con empleados y una cuarta sin indicar ese dato.
+CREATE TABLE sucursales
+(id INTEGER PRIMARY KEY , nombre VARCHAR(40) NOT NULL, provincia VARCHAR(30) NOT NULL, cant_empleados INTEGER DEFAULT 0);
+SELECT * FROM sucursales;
+
+INSERT INTO sucursales
+(id, nombre, provincia, cant_empleados)
+VALUES (1, 'Juan Perez', 'Buenos Aires', 6), (2, 'July M', 'Clearwater', 22), (3, 'Sophy', 'Savanna', 433), (4, 'Locutus', 'Enterprise', 0);
+SELECT * FROM sucursales;
+
 b) Agregá a sucursales la columna telefono. ¿Qué valor tiene en las filas existentes?
 c) Renombrá la tabla a sedes y contá sus filas.
 d) Borrá la tabla y probá un SELECT sobre ella. ¿Qué pasa?
