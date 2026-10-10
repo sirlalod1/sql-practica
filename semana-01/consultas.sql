@@ -486,7 +486,7 @@ UPDATE cuentas SET activa = 0;
 SELECT * FROM cuentas
 WHERE activa=0;
 
---4.a) Creá la tabla sucursales con id (clave primaria), nombre y provincia (ambos obligatorios, NOT NULL) y cantidad de empleados (por defecto 0). Insertá 3 sucursales con empleados y una cuarta sin indicar ese dato.
+-- 4.a) Creá la tabla sucursales con id (clave primaria), nombre y provincia (ambos obligatorios, NOT NULL) y cantidad de empleados (por defecto 0). Insertá 3 sucursales con empleados y una cuarta sin indicar ese dato.
 CREATE TABLE sucursales
 (id INTEGER PRIMARY KEY , nombre VARCHAR(40) NOT NULL, provincia VARCHAR(30) NOT NULL, cant_empleados INTEGER DEFAULT 0);
 SELECT * FROM sucursales;
@@ -496,10 +496,36 @@ INSERT INTO sucursales
 VALUES (1, 'Juan Perez', 'Buenos Aires', 6), (2, 'July M', 'Clearwater', 22), (3, 'Sophy', 'Savanna', 433), (4, 'Locutus', 'Enterprise', 0);
 SELECT * FROM sucursales;
 
-b) Agregá a sucursales la columna telefono. ¿Qué valor tiene en las filas existentes?
-c) Renombrá la tabla a sedes y contá sus filas.
-d) Borrá la tabla y probá un SELECT sobre ella. ¿Qué pasa?
-e) Con sucursales creada (repetí el bloque de 4a), mostrá cada sucursal con la cantidad de cuentas de su provincia. Incluí sucursales sin cuentas. Es un LEFT JOIN con GROUP BY.
+-- 4.b) Agregá a sucursales la columna telefono. ¿Qué valor tiene en las filas existentes? (NULL)
+CREATE TABLE sucursales
+(id INTEGER PRIMARY KEY , nombre VARCHAR(40) NOT NULL, provincia VARCHAR(30) NOT NULL, cant_empleados INTEGER DEFAULT 0);
+INSERT INTO sucursales
+(id, nombre, provincia, cant_empleados)
+VALUES (1, 'Juan Perez', 'Buenos Aires', 6), (2, 'July M', 'Clearwater', 22), (3, 'Sophy', 'Savanna', 433), (4, 'Locutus', 'Enterprise', 0);
+ALTER TABLE sucursales
+ADD telefono VARCHAR(20);
+SELECT * FROM sucursales;
+
+-- 4.c) Renombrá la tabla a sedes y contá sus filas.
+CREATE TABLE sucursales
+(id INTEGER PRIMARY KEY , nombre VARCHAR(40) NOT NULL, provincia VARCHAR(30) NOT NULL, cant_empleados INTEGER DEFAULT 0);
+INSERT INTO sucursales
+(id, nombre, provincia, cant_empleados)
+VALUES (1, 'Juan Perez', 'Buenos Aires', 6), (2, 'July M', 'Clearwater', 22), (3, 'Sophy', 'Savanna', 433), (4, 'Locutus', 'Enterprise', 0);
+ALTER TABLE sucursales
+RENAME TO sedes;
+SELECT * FROM sedes;
+
+-- 4.d) Borrá la tabla y probá un SELECT sobre ella. ¿Qué pasa? (Dice que no existe)
+CREATE TABLE sucursales
+(id INTEGER PRIMARY KEY , nombre VARCHAR(40) NOT NULL, provincia VARCHAR(30) NOT NULL, cant_empleados INTEGER DEFAULT 0);
+INSERT INTO sucursales
+(id, nombre, provincia, cant_empleados)
+VALUES (1, 'Juan Perez', 'Buenos Aires', 6), (2, 'July M', 'Clearwater', 22), (3, 'Sophy', 'Savanna', 433), (4, 'Locutus', 'Enterprise', 0);
+DROP TABLE sucursales;
+SELECT * FROM sucursales;
+
+-- 4.e) Con sucursales creada (repetí el bloque de 4a), mostrá cada sucursal con la cantidad de cuentas de su provincia. Incluí sucursales sin cuentas. Es un LEFT JOIN con GROUP BY.
 
 Ejercicio 5: subconsultas y UNION (temas extra de SQLBolt)
 
