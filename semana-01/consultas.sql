@@ -526,11 +526,19 @@ DROP TABLE sucursales;
 SELECT * FROM sucursales;
 
 -- 4.e) Con sucursales creada (repetí el bloque de 4a), mostrá cada sucursal con la cantidad de cuentas de su provincia. Incluí sucursales sin cuentas. Es un LEFT JOIN con GROUP BY.
+CREATE TABLE sucursales
+(id INTEGER PRIMARY KEY , nombre VARCHAR(40) NOT NULL, provincia VARCHAR(30) NOT NULL, cant_empleados INTEGER DEFAULT 0);
+INSERT INTO sucursales
+(id, nombre, provincia, cant_empleados)
+VALUES (1, 'Juan Perez', 'Buenos Aires', 6), (2, 'July M', 'Clearwater', 22), (3, 'Sophy', 'Savanna', 433), (4, 'Locutus', 'Enterprise', 0);
+SELECT s.nombre, COUNT(c.id) AS cuentas
+FROM sucursales s
+LEFT JOIN cuentas c ON c.provincia = s.provincia
+GROUP BY s.nombre;
+
+-- 5.a) Titular y saldo de las cuentas con saldo mayor al promedio, de mayor a menor. Usá una subconsulta.
 
 
-Ejercicio 5: subconsultas y UNION (temas extra de SQLBolt)
-
-a) Titular y saldo de las cuentas con saldo mayor al promedio, de mayor a menor. Usá una subconsulta.
 b) Titulares de cuentas que tienen movimientos (subconsulta con IN).
 c) Titulares de cuentas que no tienen movimientos (NOT IN).
 d) Provincias con alguna cuenta de saldo mayor a 1.000.000, unidas con provincias con alguna cuenta corriente. Hacelo con UNION y con UNION ALL y compará la cantidad de filas.
